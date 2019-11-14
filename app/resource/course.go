@@ -5,9 +5,9 @@ import (
 )
 
 type CourseResource struct {
-	Id      int
-	Title   string
-	Student model.Student
+	Id      int             `json:"id"`
+	Title   string          `json:"title"`
+	Student StudentResource `json:"student"`
 }
 
 func (CourseResource) Collection(courses []model.Course) []CourseResource {
@@ -18,7 +18,7 @@ func (CourseResource) Collection(courses []model.Course) []CourseResource {
 		collection = append(collection, CourseResource{
 			Id:      item.Id,
 			Title:   item.Title,
-			Student: item.GetStudent(),
+			Student: StudentResource{}.One(item.GetStudent()),
 		})
 	}
 
@@ -32,7 +32,7 @@ func (CourseResource) One(course model.Course) CourseResource {
 
 	one.Id = course.Id
 	one.Title = course.Title
-	one.Student = course.GetStudent()
+	one.Student = StudentResource{}.One(course.GetStudent())
 
 	return one
 }
