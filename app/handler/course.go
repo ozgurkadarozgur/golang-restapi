@@ -3,6 +3,7 @@ package handler
 import (
 	"net/http"
 	"pro/restapi/app/model"
+	"pro/restapi/app/resource"
 	"pro/restapi/app/validator"
 
 	"github.com/gin-gonic/gin"
@@ -18,7 +19,7 @@ func (handler CourseHandler) Index(c *gin.Context) {
 	courses := course.All()
 	c.JSON(http.StatusOK, gin.H{
 		"status": "success",
-		"data":   courses,
+		"data":   resource.CourseResource{}.Collection(courses),
 	})
 }
 

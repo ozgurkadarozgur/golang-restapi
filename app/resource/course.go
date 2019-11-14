@@ -7,7 +7,7 @@ import (
 type CourseResource struct {
 	Id      int
 	Title   string
-	Student uint
+	Student model.Student
 }
 
 func (CourseResource) Collection(courses []model.Course) []CourseResource {
@@ -18,7 +18,7 @@ func (CourseResource) Collection(courses []model.Course) []CourseResource {
 		collection = append(collection, CourseResource{
 			Id:      item.Id,
 			Title:   item.Title,
-			Student: item.StudentId,
+			Student: item.GetStudent(),
 		})
 	}
 
@@ -32,7 +32,7 @@ func (CourseResource) One(course model.Course) CourseResource {
 
 	one.Id = course.Id
 	one.Title = course.Title
-	one.Student = course.StudentId
+	one.Student = course.GetStudent()
 
 	return one
 }

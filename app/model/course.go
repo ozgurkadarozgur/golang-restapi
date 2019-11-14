@@ -11,8 +11,10 @@ type Course struct {
 	Student   Student `gorm:"foreign_key:StudentId"`
 }
 
-func GetStudent() {
-
+func (course Course) GetStudent() Student {
+	var student Student
+	db.Model(course).Related(&student)
+	return student
 }
 
 func (course Course) All() []Course {
